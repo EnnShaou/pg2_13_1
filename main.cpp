@@ -9,14 +9,7 @@ const int kWindowHeight = 720;//画面の縦幅
 class Character
 {
 public:
-	static bool isAlive;
-	/// <summary>
-	/// 状態代入
-	/// </summary>
-	/// <param name="state"></param>
-	static void SetIsAlive(bool state) {
-		isAlive = state;
-	}
+
 	Character(Vector2 pos) :
 		pos_(pos),
 		speed_(6.0f, 0.0f),
@@ -60,7 +53,7 @@ protected:
 	Vector2 speed_;
 	int radius;
 };
-bool Character::isAlive = true;
+
 
 class Bullet :public Character
 {
@@ -100,7 +93,15 @@ private:
 class Enemy :public Character
 {
 public:
-
+	static bool isAlive;
+	/// <summary>
+	/// 状態代入
+	/// </summary>
+	/// <param name="state"></param>
+	static void SetIsAlive(bool state) {
+		isAlive = state;
+	}
+	static bool GetIsAlive() { return isAlive }
 	Enemy(Vector2 pos) :Character(pos) { isAlive = true; }
 	~Enemy() { isAlive = false; }
 	/// <summary>
@@ -135,6 +136,7 @@ public:
 private:
 
 };
+bool Enemy::isAlive = true;
 class Player :public Character
 {
 public:
@@ -260,8 +262,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		{
 			enemy[i]->Draw(RED);
 		}
-		Novice::ScreenPrintf(0, 20, "enemyA : %d", enemy[0]->isAlive);
-		Novice::ScreenPrintf(0, 40, "enemyB : %d", enemy[1]->isAlive);
+		Novice::ScreenPrintf(0, 20, "enemyA : %d", Enemy::isAlive);
+		Novice::ScreenPrintf(0, 40, "enemyB : %d", Enemy::isAlive);
 		Novice::ScreenPrintf(0, 60, "Press R to reset");
 		///
 		/// ↓描画処理ここから
